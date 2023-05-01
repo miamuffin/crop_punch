@@ -1,0 +1,168 @@
+[gd_scene load_steps=14 format=3 uid="uid://c4lebamc1rd5s"]
+
+[ext_resource type="Texture2D" uid="uid://c62osp5r8roe0" path="res://assets/projectiles/fire1.png" id="1_3mrp3"]
+[ext_resource type="Script" path="res://assets/projectiles/firewall.gd" id="1_bfp81"]
+[ext_resource type="Texture2D" uid="uid://c74mf4dt5632a" path="res://assets/bakcground/shadow.png" id="2_cv5p5"]
+[ext_resource type="Texture2D" uid="uid://omu8ynbo47a0" path="res://assets/projectiles/fire2.png" id="2_vtjvo"]
+[ext_resource type="Texture2D" uid="uid://c3cfkohqrec1o" path="res://assets/projectiles/fire3.png" id="3_e3tv5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rus07"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3mrp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vtjvo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e3tv5")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_js7pw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.6, 0.6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("shadow:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2.6, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7d0iu"]
+resource_name = "grow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 0.4), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("shadow:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2.6, 0.4), Vector2(2.6, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4c6l1"]
+_data = {
+"RESET": SubResource("Animation_js7pw"),
+"grow": SubResource("Animation_7d0iu")
+}
+
+[sub_resource type="Animation" id="Animation_0yfkn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.261799]
+}
+
+[sub_resource type="Animation" id="Animation_8ab20"]
+resource_name = "skew"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [-0.174533, 0.174533, -0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbyii"]
+_data = {
+"RESET": SubResource("Animation_0yfkn"),
+"skew": SubResource("Animation_8ab20")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjw47"]
+size = Vector2(32, 17)
+
+[node name="firewall" type="Area2D"]
+position = Vector2(0, -16)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_bfp81")
+
+[node name="shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.333333)
+position = Vector2(1, 12)
+scale = Vector2(2.6, 1)
+texture = ExtResource("2_cv5p5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_repeat = 2
+scale = Vector2(0.6, 0.6)
+skew = -0.261799
+sprite_frames = SubResource("SpriteFrames_rus07")
+animation = &"fire"
+autoplay = "fire"
+frame_progress = 0.358703
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "grow"
+libraries = {
+"": SubResource("AnimationLibrary_4c6l1")
+}
+
+[node name="skew" type="AnimationPlayer" parent="."]
+autoplay = "skew"
+libraries = {
+"": SubResource("AnimationLibrary_hbyii")
+}
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 1, 0.282353, 1)
+energy = 0.11
+texture = ExtResource("1_3mrp3")
+texture_scale = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_fjw47")

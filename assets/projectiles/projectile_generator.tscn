@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://buj0p7vwuvhvj"]
+
+[ext_resource type="Script" path="res://projectile_generator.gd" id="1_o3c5m"]
+[ext_resource type="PackedScene" uid="uid://cb0paxb5u7j1g" path="res://assets/projectiles/attack_patterns.tscn" id="2_arn4e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbk80"]
+size = Vector2(1022, 66)
+
+[node name="projectile_generator" type="Node2D"]
+position = Vector2(250, -30)
+script = ExtResource("1_o3c5m")
+
+[node name="fruit_timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="fruits" type="Node2D" parent="."]
+
+[node name="fires" type="Node2D" parent="."]
+
+[node name="knives" type="Node2D" parent="."]
+
+[node name="projectile_destroyer" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="projectile_destroyer"]
+position = Vector2(0, 768)
+shape = SubResource("RectangleShape2D_gbk80")
+
+[node name="firewall_timer" type="Timer" parent="."]
+wait_time = 1.2
+
+[node name="AttackPatterns" parent="." instance=ExtResource("2_arn4e")]
+
+[connection signal="timeout" from="fruit_timer" to="." method="_on_fruit_timer_timeout"]
+[connection signal="area_entered" from="projectile_destroyer" to="." method="_on_projectile_destroyer_area_entered"]
+[connection signal="timeout" from="firewall_timer" to="." method="_on_firewall_timer_timeout"]

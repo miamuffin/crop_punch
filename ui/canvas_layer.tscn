@@ -1,0 +1,125 @@
+[gd_scene load_steps=12 format=3 uid="uid://doad4mfvsyxsx"]
+
+[ext_resource type="Script" path="res://CanvasLayer.gd" id="1_8hk72"]
+[ext_resource type="FontFile" uid="uid://co6e0l2ry7ddc" path="res://prstart.ttf" id="2_mby6j"]
+[ext_resource type="Texture2D" uid="uid://cvf71fwysw0xv" path="res://ui/health_bar4.png" id="3_77r4t"]
+[ext_resource type="Texture2D" uid="uid://07u1lapy1ygv" path="res://ui/health_bar3.png" id="4_voc2k"]
+[ext_resource type="Texture2D" uid="uid://dw3aj8kgyi3tx" path="res://ui/health_bar2.png" id="5_hkoaj"]
+[ext_resource type="Texture2D" uid="uid://bpvgafjsrolb" path="res://ui/health_bar1.png" id="6_6ejoh"]
+
+[sub_resource type="Theme" id="Theme_8frlc"]
+default_font = ExtResource("2_mby6j")
+default_font_size = 0
+Label/font_sizes/font_size = 16
+Label/fonts/font = ExtResource("2_mby6j")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2yrvr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_77r4t")
+}],
+"loop": true,
+"name": &"0hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_voc2k")
+}],
+"loop": true,
+"name": &"1hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_hkoaj")
+}],
+"loop": true,
+"name": &"2hp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_6ejoh")
+}],
+"loop": false,
+"name": &"3hp",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_ixj6c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.3, 1.3)]
+}
+
+[sub_resource type="Animation" id="Animation_bioh5"]
+resource_name = "hit"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.241484, 1),
+"update": 0,
+"values": [Vector2(0.6, 0.6), Vector2(1.2, 1.2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7xn5o"]
+_data = {
+"RESET": SubResource("Animation_ixj6c"),
+"hit": SubResource("Animation_bioh5")
+}
+
+[node name="Interface" type="CanvasLayer"]
+script = ExtResource("1_8hk72")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_8frlc")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/margin_left = 10
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+text = "25626722"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer2"]
+position = Vector2(-62, -16)
+scale = Vector2(1.3, 1.3)
+sprite_frames = SubResource("SpriteFrames_2yrvr")
+animation = &"3hp"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/MarginContainer2/Sprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_7xn5o")
+}

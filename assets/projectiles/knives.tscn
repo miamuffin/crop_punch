@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://0aoo306271um"]
+
+[ext_resource type="Script" path="res://Knives.gd" id="1_jbarf"]
+[ext_resource type="Texture2D" uid="uid://dco0qc0775p0r" path="res://assets/projectiles/knives.png" id="2_yft2p"]
+[ext_resource type="Texture2D" uid="uid://c74mf4dt5632a" path="res://assets/bakcground/shadow.png" id="3_t6f4h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x3lq4"]
+
+[node name="Knives" type="Area2D"]
+scale = Vector2(1.5, 1.5)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_jbarf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 4
+texture = ExtResource("2_yft2p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x3lq4")
+
+[node name="shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.333333)
+z_index = 1
+position = Vector2(1, 6)
+scale = Vector2(1, 2)
+texture = ExtResource("3_t6f4h")

@@ -1,0 +1,416 @@
+[gd_scene load_steps=33 format=3 uid="uid://btewkwrqpdi30"]
+
+[ext_resource type="Texture2D" uid="uid://bongal1nvkr36" path="res://assets/player/player_sheet1.png" id="1_fnm7e"]
+[ext_resource type="Script" path="res://assets/player/player.gd" id="1_ya15n"]
+[ext_resource type="Shader" path="res://shaders/FlashSprite.gdshader" id="2_mn5oh"]
+[ext_resource type="Texture2D" uid="uid://bduni5v27dgt1" path="res://assets/player/player_sheet2.png" id="2_un81r"]
+[ext_resource type="Texture2D" uid="uid://dhexdx1n7yjhw" path="res://assets/player/player_sheet3.png" id="3_exlrq"]
+[ext_resource type="Texture2D" uid="uid://m2yjja2ugs0m" path="res://assets/player/player_sheet4.png" id="4_vi5qb"]
+[ext_resource type="Texture2D" uid="uid://dqvbmcfwnbjy7" path="res://assets/player/player_sheet7.png" id="7_xv6oq"]
+[ext_resource type="Texture2D" uid="uid://tpdhxvhajiaq" path="res://assets/player/player_sheet8.png" id="8_f43ay"]
+[ext_resource type="Texture2D" uid="uid://dpb0trsuhhq0v" path="res://assets/player/player_sheet9.png" id="9_fsyjj"]
+[ext_resource type="Texture2D" uid="uid://b4t7dfh6ovrw6" path="res://assets/player/player_sheet10.png" id="10_dvnn3"]
+[ext_resource type="Texture2D" uid="uid://y16opb4obdi3" path="res://assets/player/player_sheet11.png" id="11_nnpb7"]
+[ext_resource type="Texture2D" uid="uid://cra0ovvh186bn" path="res://assets/player/player_sheet12.png" id="12_7yblo"]
+[ext_resource type="AudioStream" uid="uid://dm51c1r4vet1j" path="res://assets/sounds/swing_sound.ogg" id="13_qjaoi"]
+[ext_resource type="Texture2D" uid="uid://bjrpb31pfw0lj" path="res://assets/player/player_sheet13.png" id="13_qtehc"]
+[ext_resource type="Texture2D" uid="uid://csv3uvbia54an" path="res://assets/player/skate1.png" id="14_fayuh"]
+[ext_resource type="Texture2D" uid="uid://d3f1sqyg7llbo" path="res://assets/player/skate2.png" id="15_c4eky"]
+[ext_resource type="Texture2D" uid="uid://c74mf4dt5632a" path="res://assets/bakcground/shadow.png" id="16_7dqa8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d506o"]
+shader = ExtResource("2_mn5oh")
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash_intensity = 0.0
+shader_parameter/invincibility_instensity = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_taj0e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fnm7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_un81r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_exlrq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vi5qb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_xv6oq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_f43ay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_fsyjj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_dvnn3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nnpb7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7yblo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_qtehc")
+}],
+"loop": false,
+"name": &"swing",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jrf1x"]
+size = Vector2(8, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eacnq"]
+size = Vector2(56, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_glrbu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_fayuh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_c4eky")
+}],
+"loop": true,
+"name": &"move",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_3xh7a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sohpt"]
+resource_name = "shadow_appear"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Vector2(0.6, 0.6), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.576471), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a70wb"]
+resource_name = "shadow_fade"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.6, 0.6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.572549)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mwy2d"]
+_data = {
+"RESET": SubResource("Animation_3xh7a"),
+"shadow_appear": SubResource("Animation_sohpt"),
+"shadow_fade": SubResource("Animation_a70wb")
+}
+
+[sub_resource type="Animation" id="Animation_1dg7i"]
+resource_name = "DIE"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(4.92457, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.12, 0.8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(4.92457, 1),
+"update": 0,
+"values": [0.0, 0.776672]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(4.92457, 3.4822, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0.529), Vector2(17.07, 8.933)]
+}
+
+[sub_resource type="Animation" id="Animation_flsap"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/flash_intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1ps32"]
+resource_name = "blink"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_yimms"]
+resource_name = "flash"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/flash_intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [0.758, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cl4qg"]
+_data = {
+"DIE": SubResource("Animation_1dg7i"),
+"RESET": SubResource("Animation_flsap"),
+"blink": SubResource("Animation_1ps32"),
+"flash": SubResource("Animation_yimms")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txa8y"]
+size = Vector2(20, 8)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ya15n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 5
+material = SubResource("ShaderMaterial_d506o")
+sprite_frames = SubResource("SpriteFrames_taj0e")
+animation = &"idle"
+autoplay = "idle"
+frame = 1
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 9.5)
+shape = SubResource("RectangleShape2D_jrf1x")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(2, -12)
+shape = SubResource("RectangleShape2D_eacnq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_qjaoi")
+
+[node name="AttackDelay" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="Skate" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(1, 25)
+sprite_frames = SubResource("SpriteFrames_glrbu")
+animation = &"move"
+autoplay = "move"
+frame = 1
+frame_progress = 0.710963
+
+[node name="JumpDelay" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="shadow" type="Sprite2D" parent="."]
+position = Vector2(1, 28)
+texture = ExtResource("16_7dqa8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="shadow"]
+libraries = {
+"": SubResource("AnimationLibrary_mwy2d")
+}
+
+[node name="SkateSoundDelay" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="flash" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cl4qg")
+}
+
+[node name="Invincibility" type="Timer" parent="."]
+one_shot = true
+
+[node name="FirewallHurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="FirewallHurtBoxShape" type="CollisionShape2D" parent="FirewallHurtBox"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_txa8y")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="JumpDelay" to="." method="_on_jump_delay_timeout"]
+[connection signal="animation_finished" from="shadow/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="SkateSoundDelay" to="." method="_on_skate_sound_delay_timeout"]
+[connection signal="animation_finished" from="flash" to="." method="_on_flash_animation_finished"]
+[connection signal="timeout" from="Invincibility" to="." method="_on_invincibility_timeout"]
+[connection signal="area_entered" from="FirewallHurtBox" to="." method="_on_firewall_hurt_box_area_entered"]
